@@ -1,22 +1,19 @@
 package ru.hogwarts.school.service;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.Null;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repositorie.StudentRepositori;
+import ru.hogwarts.school.repositorie.StudentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 class StudentServiceTest {
-    StudentRepositori studentRepositorimock = mock(StudentRepositori.class);
+    StudentRepository studentRepositorimock = mock(StudentRepository.class);
     StudentService studentService = new StudentService(studentRepositorimock);
 
     @Test

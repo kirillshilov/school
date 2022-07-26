@@ -4,7 +4,7 @@ package ru.hogwarts.school.service;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.repositorie.FacultyRepositori;
+import ru.hogwarts.school.repositorie.FacultyRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 class FacultyServiceTest {
-    FacultyRepositori facultyRepositorimock = Mockito.mock(FacultyRepositori.class);
+    FacultyRepository facultyRepositorimock = Mockito.mock(FacultyRepository.class);
     FacultyService facultyService = new FacultyService(facultyRepositorimock);
 
     @Test

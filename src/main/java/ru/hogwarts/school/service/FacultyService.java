@@ -3,16 +3,16 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.repositorie.FacultyRepositori;
+import ru.hogwarts.school.repositorie.FacultyRepository;
 
 
 import java.util.*;
 
 @Service
 public class FacultyService {
-    FacultyRepositori facultyRepositori;
+    FacultyRepository facultyRepositori;
 
-    public FacultyService(FacultyRepositori facultyRepositori) {
+    public FacultyService(FacultyRepository facultyRepositori) {
         this.facultyRepositori = facultyRepositori;
     }
 
