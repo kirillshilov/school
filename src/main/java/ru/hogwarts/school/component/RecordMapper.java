@@ -21,7 +21,8 @@ public class RecordMapper {
          studentRecord.setId(student.getId());
          studentRecord.setName(student.getName());
          studentRecord.setAge(student.getAge());
-         studentRecord.setFaculty(toRecord(student.getFaculty()));
+         if (student.getFaculty() != null){
+         studentRecord.setFaculty(toRecord(student.getFaculty()));}
          return studentRecord;
      }
 

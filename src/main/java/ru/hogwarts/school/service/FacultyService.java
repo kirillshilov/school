@@ -43,7 +43,7 @@ public class FacultyService {
         return recordMapper.toRecord(facultyRepositori.save(oldFaculty));
     }
 
-    public void deleteFaculty(Long id) {
+    public FacultyRecord deleteFaculty(Long id) {
      Faculty faculty = facultyRepositori.findById(id).orElseThrow(FacultyNotFoundException::new);
      facultyRepositori.delete(faculty);
      return recordMapper.toRecord(faculty);
