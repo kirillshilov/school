@@ -1,12 +1,12 @@
 package ru.hogwarts.school.Record;
 
-import ru.hogwarts.school.model.Faculty;
+
 
 public class StudentRecord {
     private Long id;
     private String name;
     private int age;
-    private Faculty faculty;
+    private FacultyRecord faculty;
 
     public Long getId() {
         return id;
@@ -32,7 +32,7 @@ public class StudentRecord {
         this.age = age;
     }
 
-    public Faculty getFaculty() {
+    public FacultyRecord getFaculty() {
         return faculty;
     }
 
