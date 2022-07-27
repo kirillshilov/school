@@ -3,7 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.Record.StudentRecord;
 import ru.hogwarts.school.service.StudentService;
 
 
@@ -21,13 +21,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+    public StudentRecord createStudent(@RequestBody StudentRecord studentRecord) {
+        return studentService.addStudent(studentRecord);
     }
 
     @PutMapping
-    public ResponseEntity editStudent(@RequestBody Student student) {
-        Student temp = studentService.changeStudent(student);
+    public ResponseEntity editStudent(@RequestBody StudentRecord studentRecord) {
+        StudentRecord temp = studentService.changeStudent(studentRecord);
         if (temp == null) {
             return ResponseEntity.notFound().build();
         }
@@ -42,7 +42,7 @@ public class StudentController {
 
     @GetMapping("{id}")
     public ResponseEntity getStudent(@PathVariable Long id) {
-        Student temp = studentService.findStudent(id);
+        StudentRecord temp = studentService.findStudent(id);
         if (temp == null) {
             ResponseEntity.notFound().build();
         }
@@ -50,13 +50,14 @@ public class StudentController {
     }
 
     @GetMapping()
-    public Collection<Student> getStudentByAge(@RequestParam(required = false) Long age, @RequestParam(required = false) Long minAge, @RequestParam (required = false) Long maxAge) {
-
-
-       if (minAge != null && maxAge != null) {
-           return studentService.allStudentBetweenAge(minAge, maxAge);
-       }
+    public Collection <StudentRecord> getStudentByAge(@PathVariable Long age) {
           return studentService.allStudentOfAge(age);
     }
+    @GetMapping(params = {"min", "max"})
+    public Collection<StudentRecord> getStudentByAgeBetween( @RequestParam Long minAge, @RequestParam Long maxAge) {
+
+            return studentService.allStudentBetweenAge(minAge, maxAge);
+        }
+
 
 }

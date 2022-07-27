@@ -2,10 +2,11 @@ package ru.hogwarts.school.model;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.zip.ZipEntry;
+
 
 
 @Entity
+@Table (name = "students")
 public class Student {
 
     @Id
@@ -15,22 +16,10 @@ public class Student {
     private int age;
 
     @ManyToOne (fetch = FetchType.LAZY)
+
     @JoinColumn (name = "faculty_id")
     private Faculty faculty;
 
-
-
-    public Student(Long id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
-
-    public Student() {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
 
 
     @Override
@@ -81,5 +70,8 @@ public class Student {
     }
     public Faculty getFaculty() {
         return faculty;
+    }
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 }
