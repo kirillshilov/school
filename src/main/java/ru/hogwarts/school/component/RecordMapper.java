@@ -13,7 +13,6 @@ public class RecordMapper {
         facultyRecord.setId(faculty.getId());
         facultyRecord.setName(faculty.getName());
         facultyRecord.setColor(faculty.getColor());
-
         return facultyRecord;
     }
      public StudentRecord toRecord (Student student){
@@ -31,8 +30,6 @@ public class RecordMapper {
     Student student = new Student();
     student.setAge(studentRecord.getAge());
     student.setName(studentRecord.getName());
-        if (studentRecord.getFaculty() != null){
-    student.setFaculty(toEntity(studentRecord.getFaculty()));}
     return student;
     }
 

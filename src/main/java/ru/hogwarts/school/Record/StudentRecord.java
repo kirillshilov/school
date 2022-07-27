@@ -37,7 +37,7 @@ public class StudentRecord {
     }
 
     public void setFaculty(FacultyRecord facultyRecord) {
-        this.faculty = faculty;
+        this.faculty = facultyRecord;
     }
 
 }

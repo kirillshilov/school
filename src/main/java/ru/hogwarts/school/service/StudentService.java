@@ -6,7 +6,9 @@ import ru.hogwarts.school.Record.StudentRecord;
 import ru.hogwarts.school.Exceptions.FacultyNotFoundException;
 import ru.hogwarts.school.Exceptions.StudentNotFoundException;
 import ru.hogwarts.school.component.RecordMapper;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositorie.FacultyRepository;
 import ru.hogwarts.school.repositorie.StudentRepository;
 
 import java.util.*;
@@ -17,14 +19,20 @@ import java.util.stream.Collectors;
 public class StudentService {
     StudentRepository studentRepository;
     RecordMapper recordMapper;
+    FacultyRepository facultyRepository;
 
-    public StudentService(StudentRepository studentRepository, RecordMapper recordMapper) {
+    public StudentService(StudentRepository studentRepository, RecordMapper recordMapper, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
         this.recordMapper = recordMapper;
+        this.facultyRepository = facultyRepository;
     }
     public StudentRecord addStudent(StudentRecord studentRecord) {
-        return recordMapper.toRecord(studentRepository.save(recordMapper.toEntity(studentRecord)));
-
+        Student student = recordMapper.toEntity(studentRecord);
+        if (studentRecord.getFaculty() != null){
+            Faculty faculty = facultyRepository.findById(studentRecord.getFaculty().getId()).orElseThrow(FacultyNotFoundException::new);
+       student.setFaculty(faculty);
+        }
+return recordMapper.toRecord(studentRepository.save(student));
     }
 
     public StudentRecord findStudent(Long id) {
