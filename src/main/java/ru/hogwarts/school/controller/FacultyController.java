@@ -3,7 +3,7 @@ package ru.hogwarts.school.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.Record.FacultyRecord;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
@@ -20,13 +20,13 @@ public class FacultyController {
     }
 
     @PostMapping
-    public Faculty createFaculty(@RequestBody Faculty faculty) {
-        return facultyService.addFaculty(faculty);
+    public FacultyRecord createFaculty(@RequestBody FacultyRecord facultyRecord) {
+        return facultyService.addFaculty(facultyRecord);
     }
 
     @PutMapping
-    public ResponseEntity editFaculty(@RequestBody Faculty faculty) {
-        Faculty temp = facultyService.changeFaculty(faculty);
+    public ResponseEntity editFaculty(@RequestBody FacultyRecord facultyRecord) {
+        FacultyRecord temp = facultyService.changeFaculty(facultyRecord);
         if (temp == null) {
             return ResponseEntity.notFound().build();
         }
@@ -45,8 +45,12 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping(params = "color")
+    public Collection <FacultyRecord> getFacultyByColor(@RequestParam  String color) {
+        return facultyService.allFacultyOfColor(color);
+    }
     @GetMapping()
-    public Collection<Faculty> getFacultyByColorOrName(@RequestParam (required = false) String color, @RequestParam (required = false) String name) {
-        return facultyService.allFacultyOfColorOrName(color, name);
+    public Collection <FacultyRecord> getFacultyByColorOrName(@RequestParam  String colorOrName) {
+        return facultyService.allFacultyOfColorOrName(colorOrName);
     }
 }
