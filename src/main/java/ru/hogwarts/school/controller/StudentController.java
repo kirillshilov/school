@@ -56,24 +56,20 @@ public class StudentController {
 
 
     @GetMapping(params = {"age"})
-    public Collection<Student> getStudentByAge(@RequestParam(required = false) Long age) {
+    public Collection<Student> getStudentByAge(@RequestParam(required = false) int age) {
         return studentService.allStudentOfAge(age);
     }
 
     @GetMapping(params = {"minAge", "maxAge"})
-    public Collection<Student> getStudentByAgeBetween(@RequestParam(value = "minAge",required = false) Long minAge, @RequestParam(value = "maxAge", required = false) Long maxAge) {
+    public Collection<Student> getStudentByAgeBetween(@RequestParam(value = "minAge",required = false) int minAge, @RequestParam(value = "maxAge", required = false) int maxAge) {
 
         return studentService.allStudentBetweenAge(minAge, maxAge);
     }
 
-    @GetMapping(params = {"studentId"})
+    @GetMapping(params = {"id"})
     public ResponseEntity getFacultyOfStudent(@RequestParam(required = false) Long id) {
-
-        Faculty faculty = studentService.getStudentFaculty(id);
-        if (faculty == null) {
+        if (studentService.getStudentFaculty(id) == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(faculty);
-    }
-
-}
+        return  ResponseEntity.ok( studentService.getStudentFaculty(id));
+}}
