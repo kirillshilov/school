@@ -3,11 +3,14 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ru.hogwarts.school.Record.StudentRecord;
+
+import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 
 import java.util.Collection;
+import java.util.Optional;
 
 
 @RestController
@@ -21,13 +24,20 @@ public class StudentController {
     }
 
     @PostMapping
-    public StudentRecord createStudent(@RequestBody StudentRecord studentRecord) {
-        return studentService.addStudent(studentRecord);
+    public Student createStudent(@RequestBody Student student) {
+        return studentService.createStudent(student);
     }
-
+    @GetMapping("{id}")
+    public ResponseEntity readStudent( @PathVariable Long id) {
+       Optional <Student> temp = studentService.readStudent(id);
+        if (!temp.isPresent()) {
+          return   ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(temp);
+    }
     @PutMapping
-    public ResponseEntity editStudent(@RequestBody StudentRecord studentRecord) {
-        StudentRecord temp = studentService.changeStudent(studentRecord);
+    public ResponseEntity putStudent(@RequestBody Student student) {
+        Student temp = studentService.putStudent(student);
         if (temp == null) {
             return ResponseEntity.notFound().build();
         }
@@ -40,24 +50,25 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity getStudent(@PathVariable Long id) {
-        StudentRecord temp = studentService.findStudent(id);
-        if (temp == null) {
-            ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(temp);
-    }
 
-    @GetMapping()
-    public Collection <StudentRecord> getStudentByAge(@PathVariable Long age) {
+
+    @GetMapping(params = {"age"})
+    public Collection <Student> getStudentByAge(@RequestParam (required = false) Long age) {
           return studentService.allStudentOfAge(age);
     }
     @GetMapping(params = {"min", "max"})
-    public Collection<StudentRecord> getStudentByAgeBetween( @RequestParam Long minAge, @RequestParam Long maxAge) {
+    public Collection<Student> getStudentByAgeBetween( @RequestParam (required = false) Long minAge, @RequestParam (required = false) Long maxAge) {
 
             return studentService.allStudentBetweenAge(minAge, maxAge);
         }
+    @GetMapping (params = {"studentId"})
+    public ResponseEntity getFacultyOfStudent(@RequestParam (required = false) Long id){
 
+      Faculty faculty =  studentService.getStudentFaculty(id);
+    if (faculty == null){
+        return ResponseEntity.notFound().build();
+    }
+    return ResponseEntity.ok(faculty);
+    }
 
 }

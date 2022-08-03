@@ -6,14 +6,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-
 public class Faculty {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
     private String color;
-@OneToMany (mappedBy = "faculty")
+@OneToMany (mappedBy = "faculty", fetch = FetchType.LAZY)
   private Set <Student> students;
 
 
@@ -55,7 +54,7 @@ public class Faculty {
         this.color = color;
     }
 
-    public Set<Student> getStudents() {
+    public Set <Student> getStudents() {
         return students;
     }
 
