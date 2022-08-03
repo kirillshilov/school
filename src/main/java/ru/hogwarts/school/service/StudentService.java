@@ -29,8 +29,7 @@ public class StudentService {
     public Student createStudent(Student student) {
         Faculty faculty = facultyRepository.findById(student.getFaculty().getId()).orElseThrow();
         student.setFaculty(faculty);
-        studentRepository.save(student);
-        return student;
+        return studentRepository.save(student);
     }
 
     public Optional<Student> readStudent(Long id) {
@@ -46,11 +45,15 @@ public class StudentService {
         return null;
     }
 
-    public void deleteStudent(Long id) {
+    public Student deleteStudent(Long id) {
+
         if (studentRepository.findById(id).isPresent()) {
-            studentRepository.deleteById(id);
+            Student student = studentRepository.findById(id).get();
+            studentRepository.findById(id).get().setFaculty(null);
+         studentRepository.deleteById(id);
+        return student;
         }
-        throw new StudentNotFoundException();
+        return null;
     }
 
     public Collection<Student> allStudentOfAge(Long age) {
@@ -68,7 +71,5 @@ public class StudentService {
         }
         return null;
     }
-
-
 }
 

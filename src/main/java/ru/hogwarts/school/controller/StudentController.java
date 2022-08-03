@@ -27,14 +27,16 @@ public class StudentController {
     public Student createStudent(@RequestBody Student student) {
         return studentService.createStudent(student);
     }
+
     @GetMapping("{id}")
-    public ResponseEntity readStudent( @PathVariable Long id) {
-       Optional <Student> temp = studentService.readStudent(id);
+    public ResponseEntity readStudent(@PathVariable Long id) {
+        Optional<Student> temp = studentService.readStudent(id);
         if (!temp.isPresent()) {
-          return   ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(temp);
+        return ResponseEntity.ok(temp.get());
     }
+
     @PutMapping
     public ResponseEntity putStudent(@RequestBody Student student) {
         Student temp = studentService.putStudent(student);
@@ -46,29 +48,32 @@ public class StudentController {
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteStudent(@PathVariable Long id) {
-        studentService.deleteStudent(id);
-        return ResponseEntity.ok().build();
+        if (studentService.deleteStudent(id) == null){
+           return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(studentService.deleteStudent(id));
     }
-
 
 
     @GetMapping(params = {"age"})
-    public Collection <Student> getStudentByAge(@RequestParam (required = false) Long age) {
-          return studentService.allStudentOfAge(age);
+    public Collection<Student> getStudentByAge(@RequestParam(required = false) Long age) {
+        return studentService.allStudentOfAge(age);
     }
-    @GetMapping(params = {"min", "max"})
-    public Collection<Student> getStudentByAgeBetween( @RequestParam (required = false) Long minAge, @RequestParam (required = false) Long maxAge) {
 
-            return studentService.allStudentBetweenAge(minAge, maxAge);
+    @GetMapping(params = {"minAge", "maxAge"})
+    public Collection<Student> getStudentByAgeBetween(@RequestParam(value = "minAge",required = false) Long minAge, @RequestParam(value = "maxAge", required = false) Long maxAge) {
+
+        return studentService.allStudentBetweenAge(minAge, maxAge);
+    }
+
+    @GetMapping(params = {"studentId"})
+    public ResponseEntity getFacultyOfStudent(@RequestParam(required = false) Long id) {
+
+        Faculty faculty = studentService.getStudentFaculty(id);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();
         }
-    @GetMapping (params = {"studentId"})
-    public ResponseEntity getFacultyOfStudent(@RequestParam (required = false) Long id){
-
-      Faculty faculty =  studentService.getStudentFaculty(id);
-    if (faculty == null){
-        return ResponseEntity.notFound().build();
-    }
-    return ResponseEntity.ok(faculty);
+        return ResponseEntity.ok(faculty);
     }
 
 }
