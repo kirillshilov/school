@@ -13,6 +13,7 @@ import ru.hogwarts.school.repositorie.StudentRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
@@ -31,7 +32,7 @@ public class AvatarService {
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         Student student = studentRepository.getReferenceById(studentId);
-        Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir, student + "." + getExtensions(Objects.requireNonNull(avatarFile.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
@@ -43,6 +44,9 @@ public class AvatarService {
             bis.transferTo(bos);
         }
         Avatar avatar = findAvatar(studentId);
+        if(avatar == null){
+            avatar = new Avatar();
+        }
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(avatarFile.getSize());

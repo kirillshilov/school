@@ -55,6 +55,7 @@ public class FacultyController {
             return ResponseEntity.ok(temp);
         }
         return ResponseEntity.notFound().build();
+
     }
 
 
