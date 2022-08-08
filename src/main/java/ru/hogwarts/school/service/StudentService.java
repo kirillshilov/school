@@ -29,7 +29,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Optional<Student> readStudent(Long id) {
+    public Optional <Student> readStudent(Long id) {
         return studentRepository.findById(id);
     }
 

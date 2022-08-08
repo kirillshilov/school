@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import ru.hogwarts.school.model.Faculty;
+
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -30,7 +30,7 @@ public class StudentController {
 
     @GetMapping("{id}")
     public ResponseEntity readStudent(@PathVariable Long id) {
-        Optional<Student> temp = studentService.readStudent(id);
+        Optional <Student> temp = studentService.readStudent(id);
         if (!temp.isPresent()) {
             return ResponseEntity.notFound().build();
         }
