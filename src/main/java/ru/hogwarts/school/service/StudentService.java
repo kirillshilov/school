@@ -4,10 +4,13 @@ import org.springframework.stereotype.Service;
 
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.model.StudentCount;
 import ru.hogwarts.school.repositorie.FacultyRepository;
 import ru.hogwarts.school.repositorie.StudentRepository;
 
 import java.util.Collection;
+
+import java.util.List;
 import java.util.Optional;
 
 
@@ -17,10 +20,12 @@ public class StudentService {
 
     FacultyRepository facultyRepository;
 
+
     public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
 
         this.facultyRepository = facultyRepository;
+
     }
 
     public Student createStudent(Student student) {
@@ -65,5 +70,18 @@ public class StudentService {
        return  studentRepository.getReferenceById(id).getFaculty();
 
 
-}}
+}
+
+    public Long getCountOfStudent () {
+        return studentRepository.getCountStudent();
+    }
+
+    public Long getAvgAge() {
+        return studentRepository.getAvgAgeOfStudent();
+    }
+
+    public List<Student> getLastStudents() {
+        return studentRepository.getLastStudents();
+    }
+}
 

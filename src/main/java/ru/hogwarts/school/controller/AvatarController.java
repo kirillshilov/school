@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 
 @RestController
@@ -28,8 +29,10 @@ public class AvatarController {
     public AvatarController(AvatarService avatarService) {
         this.avatarService = avatarService;
     }
-
-
+@GetMapping
+    List <Avatar> getAllAvatars(@RequestParam ("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
+        return avatarService.getAllAvatars(pageNumber, pageSize);
+}
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity <String> uploudAvatar (@PathVariable Long studentId, @RequestParam  MultipartFile avatar) throws Exception{
         avatarService.uploadAvatar(studentId, avatar);
