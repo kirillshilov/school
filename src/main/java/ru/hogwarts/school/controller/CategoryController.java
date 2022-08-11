@@ -9,25 +9,27 @@ import ru.hogwarts.school.service.StudentService;
 import java.util.List;
 
 @RestController
-@RequestMapping("student_by_category")
+@RequestMapping("/student_by_category")
 public class CategoryController {
-StudentService studentService;
+    private final StudentService studentService;
 
     public CategoryController(StudentService studentService) {
         this.studentService = studentService;
     }
 
     @GetMapping
-    Long getAmountAllStudent (){
-       return studentService.getCountOfStudent();
+    public Long getAmountAllStudent() {
+        return studentService.getCountOfStudent();
     }
-    @GetMapping ("/AvgAge")
-    Long getAvgAge (){
+
+    @GetMapping("/AvgAge")
+    public Double getAvgAge() {
         return studentService.getAvgAge();
     }
-    @GetMapping ("/last_students")
-        List<Student> getLastStudents(){
-     return studentService.getLastStudents();
+
+    @GetMapping("/last_students")
+    public List<Student> getLastStudents() {
+        return studentService.getLastStudents();
 
     }
 }

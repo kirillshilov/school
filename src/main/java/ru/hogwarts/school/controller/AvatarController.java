@@ -30,7 +30,7 @@ public class AvatarController {
         this.avatarService = avatarService;
     }
 @GetMapping
-    List <Avatar> getAllAvatars(@RequestParam ("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
+    public List <Avatar> getAllAvatars(@RequestParam ("page") Integer pageNumber, @RequestParam("size") Integer pageSize){
         return avatarService.getAllAvatars(pageNumber, pageSize);
 }
     @PostMapping(value = "/{studentId}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

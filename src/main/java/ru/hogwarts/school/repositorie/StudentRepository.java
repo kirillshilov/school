@@ -22,7 +22,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     Long getCountStudent();
 
     @Query(value = "SELECT AVG (age) from student", nativeQuery = true)
-    Long getAvgAgeOfStudent();
+    Double getAvgAgeOfStudent();
 
     @Query(value = "SELECT * from student ORDER BY id DESC LIMIT 5 ", nativeQuery = true)
     List<Student> getLastStudents();

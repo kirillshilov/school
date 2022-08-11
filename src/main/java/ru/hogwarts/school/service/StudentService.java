@@ -76,7 +76,7 @@ public class StudentService {
         return studentRepository.getCountStudent();
     }
 
-    public Long getAvgAge() {
+    public Double getAvgAge() {
         return studentRepository.getAvgAgeOfStudent();
     }
 
