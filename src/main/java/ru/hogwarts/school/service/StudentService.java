@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.model.StudentCount;
 import ru.hogwarts.school.repositorie.FacultyRepository;
 import ru.hogwarts.school.repositorie.StudentRepository;
 
