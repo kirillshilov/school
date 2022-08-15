@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -16,11 +15,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("student")
 public class StudentController {
-     StudentService studentService;
+    StudentService studentService;
 
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
+    }
+
+    @GetMapping("/studentWithA")
+    public Collection<String> getStartWithAStudent() {
+        return studentService.getStartWithAStudent();
+
+    }
+
+    @GetMapping("/avgAgeOfStudent")
+    public Integer getAvgAgeOfStudent() {
+
     }
 
     @PostMapping
@@ -30,7 +40,7 @@ public class StudentController {
 
     @GetMapping("{id}")
     public ResponseEntity readStudent(@PathVariable Long id) {
-        Optional <Student> temp = studentService.readStudent(id);
+        Optional<Student> temp = studentService.readStudent(id);
         if (!temp.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -48,8 +58,8 @@ public class StudentController {
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteStudent(@PathVariable Long id) {
-        if (studentService.deleteStudent(id) == null){
-           return ResponseEntity.notFound().build();
+        if (studentService.deleteStudent(id) == null) {
+            return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(studentService.deleteStudent(id));
     }
@@ -61,15 +71,18 @@ public class StudentController {
     }
 
     @GetMapping(params = {"minAge", "maxAge"})
-    public Collection<Student> getStudentByAgeBetween(@RequestParam(value = "minAge",required = false) int minAge, @RequestParam(value = "maxAge", required = false) int maxAge) {
+    public Collection<Student> getStudentByAgeBetween(@RequestParam(value = "minAge", required = false) int minAge, @RequestParam(value = "maxAge", required = false) int maxAge) {
 
         return studentService.allStudentBetweenAge(minAge, maxAge);
     }
 
     @GetMapping(params = {"id"})
     public ResponseEntity getFacultyOfStudent(@RequestParam(required = false) Long id) {
-        if (studentService.getStudentFaculty(id) == null){
+        if (studentService.getStudentFaculty(id) == null) {
             return ResponseEntity.notFound().build();
         }
-        return  ResponseEntity.ok( studentService.getStudentFaculty(id));
-}}
+        return ResponseEntity.ok(studentService.getStudentFaculty(id));
+    }
+
+
+}

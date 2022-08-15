@@ -13,6 +13,7 @@ import java.util.Collection;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -100,6 +101,17 @@ public class StudentService {
     public List<Student> getLastStudents() {
         logger.debug("method getLastStudents is started");
         return studentRepository.getLastStudents();
+    }
+
+    public List<String> getStartWithAStudent() {
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .map(Student::getName)
+                .filter(name -> name.startsWith("A"))
+                .map(String::toUpperCase)
+                .sorted()
+                .collect(Collectors.toList());
     }
 }
 
