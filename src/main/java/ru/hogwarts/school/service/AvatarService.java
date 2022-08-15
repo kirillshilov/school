@@ -24,8 +24,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 public class AvatarService {
-    StudentRepository studentRepository;
-    AvatarRepository avatarRepository;
+    private final StudentRepository studentRepository;
+    private final AvatarRepository avatarRepository;
 
     public AvatarService(StudentRepository studentRepository, AvatarRepository avatarRepository) {
         this.studentRepository = studentRepository;
@@ -33,8 +33,8 @@ public class AvatarService {
     }
 
     @Value("&{path.to.avatars.folder}")
-    String avatarsDir;
-    Logger logger = LoggerFactory.getLogger(AvatarService.class);
+    private String avatarsDir;
+    private final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         logger.debug("method uploadAvatar is started");

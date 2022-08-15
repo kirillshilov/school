@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/port-info")
 public class InfoController {
 @Value("${server.port}")
-Integer port;
+private Integer port;
     @GetMapping
     public Integer getPort(){
 return port;

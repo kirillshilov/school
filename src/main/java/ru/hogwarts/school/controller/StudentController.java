@@ -16,7 +16,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("student")
 public class StudentController {
-    StudentService studentService;
+     StudentService studentService;
 
 
     public StudentController(StudentService studentService) {
