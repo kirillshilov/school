@@ -41,7 +41,7 @@ public class StudentService {
 
     public Optional<Student> readStudent(Long id) {
         logger.debug("method readStudent is started");
-        if (studentRepository.findById(id).isEmpty()){
+        if (studentRepository.findById(id).isEmpty()) {
             logger.error("student not found");
         }
         return studentRepository.findById(id);
@@ -112,6 +112,15 @@ public class StudentService {
                 .map(String::toUpperCase)
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    public long getAvgAgeOfStudent() {
+        long temp = (studentRepository.findAll()
+                .stream()
+                .parallel()
+                .mapToInt(Student::getAge)
+                .sum()) / studentRepository.findAll().stream().count();
+        return temp;
     }
 }
 

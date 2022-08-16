@@ -58,6 +58,10 @@ public class FacultyController {
 
     }
 
+    @GetMapping("/longestFaculty")
+    public String getLongestNameOfFaculty() {
+        return facultyService.getLongestNameOfFaculty();
+    }
 
     @GetMapping(params = "color")
     public Collection<Faculty> getFacultyByColor(@RequestParam(required = false) String color) {

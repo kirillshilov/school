@@ -29,8 +29,8 @@ public class StudentController {
     }
 
     @GetMapping("/avgAgeOfStudent")
-    public Integer getAvgAgeOfStudent() {
-
+    public Long getAvgAgeOfStudent() {
+        return studentService.getAvgAgeOfStudent();
     }
 
     @PostMapping

@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service;
 
 
+import org.apache.logging.log4j.util.PropertySource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repositorie.FacultyRepository;
 
 
+import javax.naming.Name;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -73,4 +76,11 @@ public class FacultyService {
         return facultyRepositori.findById(id).orElseThrow().getStudents();
     }
 
+    public String getLongestNameOfFaculty() {
+        return facultyRepositori.findAll()
+                .stream()
+                .map(Faculty::getName)
+                .max(String::compareTo)
+                .get();
+    }
 }
