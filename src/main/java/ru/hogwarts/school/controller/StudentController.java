@@ -10,6 +10,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.OptionalDouble;
 
 
 @RestController
@@ -29,7 +30,7 @@ public class StudentController {
     }
 
     @GetMapping("/avgAgeOfStudent")
-    public Long getAvgAgeOfStudent() {
+    public OptionalDouble getAvgAgeOfStudent() {
         return studentService.getAvgAgeOfStudent();
     }
 

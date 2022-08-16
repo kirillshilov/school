@@ -81,6 +81,6 @@ public class FacultyService {
                 .stream()
                 .map(Faculty::getName)
                 .max(String::compareTo)
-                .get();
+                .orElseThrow();
     }
 }

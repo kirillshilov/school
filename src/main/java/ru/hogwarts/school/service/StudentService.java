@@ -13,6 +13,7 @@ import java.util.Collection;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 
@@ -114,13 +115,16 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public long getAvgAgeOfStudent() {
-        long temp = (studentRepository.findAll()
+    public OptionalDouble getAvgAgeOfStudent() {
+        OptionalDouble temp = studentRepository.findAll()
                 .stream()
                 .parallel()
                 .mapToInt(Student::getAge)
-                .sum()) / studentRepository.findAll().stream().count();
+                .average();
+
         return temp;
+
+
     }
 }
 
