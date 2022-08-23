@@ -1,44 +1,130 @@
 package ru.hogwarts.school.service;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.repositorie.StudentRepositori;
 
-import java.util.*;
+import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repositorie.FacultyRepository;
+import ru.hogwarts.school.repositorie.StudentRepository;
+
+import java.util.Collection;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 
 @Service
 public class StudentService {
-StudentRepositori studentRepositori;
+    StudentRepository studentRepository;
 
-    public StudentService(StudentRepositori studentRepositori) {
-        this.studentRepositori = studentRepositori;
+    FacultyRepository facultyRepository;
+
+
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
+        this.studentRepository = studentRepository;
+
+        this.facultyRepository = facultyRepository;
+
     }
 
-    public Student addStudent(Student student) {
-    studentRepositori.save(student);
-    return student;
+    Logger logger = LoggerFactory.getLogger(StudentService.class);
+
+    public Student createStudent(Student student) {
+        logger.debug("method createStudent is started");
+        Faculty faculty = facultyRepository.findById(student.getFaculty().getId()).orElseThrow();
+        student.setFaculty(faculty);
+        return studentRepository.save(student);
+    }
+
+    public Optional<Student> readStudent(Long id) {
+        logger.debug("method readStudent is started");
+        if (studentRepository.findById(id).isEmpty()) {
+            logger.error("student not found");
+        }
+        return studentRepository.findById(id);
+    }
+
+    public Student putStudent(Student student) {
+        logger.debug("method putStudent is started");
+        Faculty faculty = facultyRepository.getReferenceById(student.getFaculty().getId());
+        if (studentRepository.findById(student.getId()).isPresent()) {
+            student.setFaculty(faculty);
+            logger.warn("student changed");
+            return studentRepository.save(student);
+        }
+        logger.error("student not found");
+        return null;
+    }
+
+    public Student deleteStudent(Long id) {
+
+        if (studentRepository.findById(id).isPresent()) {
+            Student student = studentRepository.findById(id).get();
+            studentRepository.findById(id).get().setFaculty(null);
+            studentRepository.deleteById(id);
+            logger.warn("student deleted");
+            return student;
+        }
+        logger.error("student not found");
+        return null;
+    }
+
+    public Collection<Student> allStudentOfAge(int age) {
+        logger.debug("method allStudentOfAge is started");
+        return studentRepository.findStudentByAge(age);
+    }
+
+    public Collection<Student> allStudentBetweenAge(int minAge, int maxAge) {
+        logger.debug("method allStudentBetweenAge is started");
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+    public Faculty getStudentFaculty(Long id) {
+        return studentRepository.getReferenceById(id).getFaculty();
+
 
     }
 
-    public Student findStudent(Long id) {
-return studentRepositori.findById(id).get();
+    public Long getCountOfStudent() {
+        logger.debug("method getCountOfStudent is started");
+        return studentRepository.getCountStudent();
     }
 
-    public Student changeStudent(Student student) {
-    return studentRepositori.save(student);
+    public Double getAvgAge() {
+        logger.debug("method getAvgAge is started");
+        return studentRepository.getAvgAgeOfStudent();
     }
 
-    public void deleteStudent(Long id) {
- studentRepositori.deleteById(id);
+    public List<Student> getLastStudents() {
+        logger.debug("method getLastStudents is started");
+        return studentRepository.getLastStudents();
     }
 
-    public Collection<Student> allStudentOfAge(Long age) {
-   return studentRepositori.findByAge(age);
+    public List<String> getStartWithAStudent() {
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .map(Student::getName)
+                .filter(name -> name.startsWith("A"))
+                .map(String::toUpperCase)
+                .sorted()
+                .collect(Collectors.toList());
     }
-    public Collection <Student> allStudentBetweenAge (Long minAge, Long maxAge){
-        return studentRepositori.findByAgeBetween( minAge , maxAge);
+
+    public OptionalDouble getAvgAgeOfStudent() {
+        OptionalDouble temp = studentRepository.findAll()
+                .stream()
+                .parallel()
+                .mapToInt(Student::getAge)
+                .average();
+
+        return temp;
+
+
     }
 }
 

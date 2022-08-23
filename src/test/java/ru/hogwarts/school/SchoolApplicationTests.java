@@ -1,13 +1,15 @@
 package ru.hogwarts.school;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import org.junit.jupiter.api.Test;
+
+
+
+
 class SchoolApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+@Test
+    public  void contextLoads( ){
 
+}
 }
