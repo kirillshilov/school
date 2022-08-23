@@ -99,7 +99,7 @@ public class StudentService {
         return studentRepository.getAvgAgeOfStudent();
     }
 
-    public  List<Student> getLastStudents() {
+    public List<Student> getLastStudents() {
         logger.debug("method getLastStudents is started");
         return studentRepository.getLastStudents();
     }
@@ -125,6 +125,44 @@ public class StudentService {
         return temp;
 
 
+    }
+
+    public void getAllStudents() {
+        List<Student> studentList = studentRepository.findAll();
+        System.out.println(studentList.get(0));
+        System.out.println(studentList.get(1));
+
+        new Thread(() ->
+        {
+            System.out.println(studentList.get(2));
+            System.out.println(studentList.get(3));
+        }).start();
+        new Thread(() ->
+        {
+            System.out.println(studentList.get(4));
+            System.out.println(studentList.get(5));
+        }).start();
+    }
+
+    public void getAllStudentSynchronized() {
+        List<Student> studentList = studentRepository.findAll();
+        printStudent(studentList.get(0));
+        printStudent(studentList.get(1));
+
+        new Thread(() ->
+        {
+            printStudent(studentList.get(2));
+            printStudent(studentList.get(3));
+        }).start();
+        new Thread(() ->
+        {
+            printStudent(studentList.get(4));
+            printStudent(studentList.get(5));
+        }).start();
+    }
+
+    private synchronized void printStudent(Student student) {
+        System.out.println(student);
     }
 }
 

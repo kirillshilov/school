@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("/port-info")
 public class InfoController {
-    @Value("${server.port}")
+    @Value("${server.port.info}")
     private Integer port;
 
     @GetMapping

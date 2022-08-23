@@ -85,5 +85,13 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentFaculty(id));
     }
 
+    @GetMapping("/potoki")
+    public void getAllStudents() {
+        studentService.getAllStudents();
+    }
+    @GetMapping ("/potoki_synchronized")
+    public void getAllStudentSynchronized (){
+        studentService.getAllStudentSynchronized();
+    }
 
 }
