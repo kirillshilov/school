@@ -99,7 +99,7 @@ public class StudentService {
         return studentRepository.getAvgAgeOfStudent();
     }
 
-    public List<Student> getLastStudents() {
+    public  List<Student> getLastStudents() {
         logger.debug("method getLastStudents is started");
         return studentRepository.getLastStudents();
     }
