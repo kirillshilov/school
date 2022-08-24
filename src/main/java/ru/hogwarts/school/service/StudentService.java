@@ -146,23 +146,21 @@ public class StudentService {
 
     public void getAllStudentSynchronized() {
         List<Student> studentList = studentRepository.findAll();
-        printStudent(studentList.get(0));
-        printStudent(studentList.get(1));
+        printStudent(studentList.get(0), studentList.get(1));
 
         new Thread(() ->
         {
-            printStudent(studentList.get(2));
-            printStudent(studentList.get(3));
+            printStudent(studentList.get(2), studentList.get(3));
         }).start();
         new Thread(() ->
         {
-            printStudent(studentList.get(4));
-            printStudent(studentList.get(5));
+            printStudent(studentList.get(4), studentList.get(5));
         }).start();
     }
 
-    private synchronized void printStudent(Student student) {
+    private synchronized void printStudent(Student student, Student student2) {
         System.out.println(student);
+        System.out.println(student2);
     }
 }
 
